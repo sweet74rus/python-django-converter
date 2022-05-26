@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block content %} 
+<div class="main_div">
+    <div class="main_div-child">
+        <form class="ui_form" action="" method="post">
+            {% csrf_token %} 
+            <h1>Конвертер валют</h1>
+            <div class="inputs">
+                <div class="form-input">
+                    <p>Сумма</p>
+                    <input class="form-control" type="text" {% if from_amount %} value="{{ from_amount }}" {% endif %} name="from_amount">
+                </div>
+                
+                <div class="form-input">
+                    <p>Отдаем</p>
+                    <select class="form-select" name="from_curr" id="">
+                        {% for c in curr %}
+                            <option value="{{ c }}" {% if from_curr == c %}selected{% endif %}>{{ c }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-input">
+                    <p>Получаем</p>
+                    <select class="form-select" name="to_curr" id="">
+                        {% for c in curr %}
+                            <option value="{{ c }}" {% if to_curr == c %}selected{% endif %}>{{ c }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% if converted_amount %} 
+                <h2>Итого: {{ converted_amount }} {{ to_curr }}</h2>
+            {% endif %}
+            <button class="btn btn-light" type="submit">Расчитать</button>
+        </form>
+    </div>
+</div>
+{% endblock %} 
